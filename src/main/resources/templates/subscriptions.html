@@ -32,12 +32,16 @@
 
 <h3 th:text="${userChannel.username}"></h3>
 
-<th:block th:if="${type == 'subscriptions'}">
+<th:block th:if="${type} == 'subscriptions'">
     <div>Подписки</div>
 </th:block>
-<th:block th:unless="${type == 'subscribers'}">
+<th:block th:if="${type} == 'subscribers'">
     <div>Подписчики</div>
 </th:block>
+
+<!--<th:block th:unless="${type} == 'subscribers'">-->
+<!--    <div>Подписчики</div>-->
+<!--</th:block>-->
 <ul class="list-group">
     <li class="list-group-item" th:each="user : ${users}">
         <a th:href="@{/user/{username}(username=${user.username})}" th:text="${user.getUsername()}"></a>

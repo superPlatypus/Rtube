@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/profile")
+@RequestMapping("/addvideo")
 public class ProfileController {
 
 
@@ -29,12 +29,12 @@ public class ProfileController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping
-    public String profile(@AuthenticationPrincipal User user,
-                          Model model){
-        model.addAttribute("user", user);
-        return "profile";
-    }
+//    @GetMapping
+//    public String profile(@AuthenticationPrincipal User user,
+//                          Model model){
+//        model.addAttribute("user", user);
+//        return "profile";
+//    }
 
     @PostMapping()
     public String add(
@@ -62,6 +62,6 @@ public class ProfileController {
 
 
 
-        return "redirect:/";
+        return "redirect:/user/" + user.getUsername();
     }
 }

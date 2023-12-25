@@ -89,8 +89,10 @@ public class UserController {
     @GetMapping("/{username}/video/{filename}")
     public String video(@PathVariable String username,
                         @PathVariable String filename,
-                        Model model){
+                        Model model,
+                        @AuthenticationPrincipal User currentUser){
         model.addAttribute("video", videoRepo.findByFilename(filename));
+        model.addAttribute("currentUser", currentUser);
         return "video";
     }
 

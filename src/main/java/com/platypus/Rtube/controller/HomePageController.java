@@ -16,8 +16,10 @@ public class HomePageController {
     VideoRepo videoRepo;
 
     @GetMapping("/")
-    public String mainPage(Model model){
+    public String mainPage(Model model,
+                           @AuthenticationPrincipal User currentUser){
         model.addAttribute("videos", videoRepo.findAll());
+        model.addAttribute("currentUser", currentUser);
         return "home";
     }
 
