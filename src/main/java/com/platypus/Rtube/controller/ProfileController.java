@@ -3,6 +3,7 @@ package com.platypus.Rtube.controller;
 import com.platypus.Rtube.Entity.User;
 import com.platypus.Rtube.Entity.Video;
 import com.platypus.Rtube.repository.VideoRepo;
+import com.platypus.Rtube.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +27,9 @@ public class ProfileController {
 
     @Autowired
     VideoRepo videoRepo;
+
+    @Autowired
+    FileService fileService;
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -51,7 +55,8 @@ public class ProfileController {
             }
 
             String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+            String latinFilename = fileService.cyryllicToLatin(file.getOriginalFilename());
+            String resultFilename = uuidFile + "." + latinFilename;
 
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
@@ -59,9 +64,6 @@ public class ProfileController {
 
             videoRepo.save(video);
         }
-
-
-
         return "redirect:/user/" + user.getUsername();
     }
 }

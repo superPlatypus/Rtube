@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -23,6 +25,9 @@ public class Video {
     private String name;
     private String description;
     private LocalDateTime date;
+
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new HashSet<>();
 
     public Video(User author, String filename, String name, String description) {
         this.author = author;
