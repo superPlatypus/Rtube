@@ -3,6 +3,7 @@ package com.platypus.Rtube.controller;
 
 import com.platypus.Rtube.Entity.User;
 import com.platypus.Rtube.Entity.Video;
+import com.platypus.Rtube.repository.CommentRepo;
 import com.platypus.Rtube.repository.UserRepo;
 import com.platypus.Rtube.repository.VideoRepo;
 import com.platypus.Rtube.service.UserService;
@@ -86,6 +87,9 @@ public class UserController {
         return "subscriptions";
     }
 
+    @Autowired
+    CommentRepo commentRepo;
+
     @GetMapping("/{username}/video/{filename}")
     public String video(@PathVariable String username,
                         @PathVariable String filename,
@@ -93,6 +97,7 @@ public class UserController {
                         @AuthenticationPrincipal User currentUser){
         model.addAttribute("video", videoRepo.findByFilename(filename));
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("comments", commentRepo.findAllByVideo(videoRepo.findByFilename(filename)));
         return "video";
     }
 
